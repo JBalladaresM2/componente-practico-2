@@ -1,5 +1,0 @@
-Phyton basico
-Inteligencia Artificial
-Redes
-Seguridad Informatica
-Bases de datos 
