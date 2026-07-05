@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Anek Malayalam", sans-serif;
+    background: #000821;
+    padding: 1.5rem;
+}
+
+.fondo-gradiente,
+.brillo-centro {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+
+.fondo-gradiente {
+    background: radial-gradient(circle at center,
+            #3a6bb0 0%,
+            #1b3a7a 30%,
+            #0b1e4a 65%,
+            #000821 100%);
+}
+
+.brillo-centro {
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(circle at center,
+            rgba(140, 190, 255, 0.10) 0%,
+            rgba(70, 130, 220, 0.03) 40%,
+            transparent 75%);
+}
+
+.card {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 2.5rem 2.8rem;
+    background: rgba(0, 8, 33, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 4rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+}
+
+.texto {
+    flex: 1 1 400px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.etiqueta-grupo {
+    display: inline-block;
+    width: fit-content;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.3rem 1rem;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.texto h1 {
+    display: inline-block;
+    font-size: clamp(2.8rem, 8vw, 4.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.4rem;
+    color: #fff;
+    border-bottom: 4px solid rgba(255, 255, 255, 0.15);
+}
+
+.texto h1 span {
+    color: #fffa77;
+}
+
+.subtitulo {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 300;
+    line-height: 1.5;
+    max-width: 600px;
+    color: #ebebeb;
+}
+
+.btn-continuar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: fit-content;
+    margin-top: 0.6rem;
+    padding: 0.9rem 2.8rem 0.9rem 2.2rem;
+    font-family: "Anek Malayalam", sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.3px;
+    color: #000;
+    background: #fff;
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.imagen {
+    flex: 1 1 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+.imagen img {
+    display: block;
+    width: 100%;
+    max-height: 380px;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    border-radius: 2rem;
+    box-shadow: 0 20px 40px #00000099;
+}
