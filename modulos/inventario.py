@@ -1,20 +1,20 @@
-def inventario() :
- medicamentos = open("datos/medicamentos.txt" , "r") 
- lista=[]
- for linea in medicamentos:
-        medicamento=linea.strip().split(",")
-        nombre=medicamento[0]
-        cantidad=int(medicamento[1])
-        precio=float(medicamento[2])
-        lista.append((nombre , cantidad , precio))
-        medicamentos.close()
- return lista 
-def cambio(lista_nueva):
- medicamentos = open("datos/medicamentos.txt" , "w")
- for linea in medicamentos:
-    nombre, cantidad, precio = linea
-    linea=f"{nombre},{cantidad},{precio}\n"
-    medicamentos.write(linea)
-    return(print("Inventario guardado con exito"))
+ruta_txt = "../datos/medicamentos.txt"
 
+def inventario(ruta_archivo):
+    datos_farmacos = []
+    archivo_farmacos = open(ruta_archivo, "r")
+    for linea in archivo_farmacos:
+        farmaco = linea.strip().split(",")
+        datos_farmacos.append(farmaco)
+    archivo_farmacos.close()
+    return datos_farmacos
 
+def actualizar(ruta_archivo, inventario_cache):
+    archivo_farmacos = open(ruta_archivo, "w")
+    try:
+        for farmaco, stock, precio in inventario_cache:
+            archivo_farmacos.write(f"{farmaco},{stock},{precio}\n")
+        print("Inventario guardado con exito")
+        archivo_farmacos.close()
+    except:
+        print("Error en ruta del archivo")
