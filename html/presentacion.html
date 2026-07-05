@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PyPharma Manager · Presentación</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@100..800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <link rel="stylesheet" href="css/presentacion.css">
+</head>
+
+<body class="presentacion">
+    <!-- Fondos -->
+    <div class="fondo-gradiente"></div>
+    <div class="brillo-centro"></div>
+
+    <!-- Contenido -->
+    <div class="contenedor-presentacion">
+        <!-- Cabecera -->
+        <div class="header-presentacion">
+            <div class="titulo-principal">
+                <h1><span>Py</span>Pharma Manager</h1>
+                <p>- Sistema de Farmacia</p>
+            </div>
+            <div class="info-basica">
+                <div class="item">
+                    <span class="label">Universidad</span>
+                    <span class="valor">Universidad Estatal de Milagro</span>
+                </div>
+                <div class="item">
+                    <span class="label">Facultad</span>
+                    <span class="valor">Ciencias e Ingenierias</span>
+                </div>
+                <div class="item">
+                    <span class="label">Asignatura</span>
+                    <span class="valor">Estructura de Datos - B1</span>
+                </div>
+                <div class="item">
+                    <span class="label">Docente</span>
+                    <span class="valor">Ing. Cabezas Quinto Jessica Janina</span>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Integrantes -->
+    <div class="contenedor-presentacion">
+        <div class="seccion">
+            <h2>Integrantes del Grupo</h2>
+            <div class="grid-integrantes">
+                <div class="integrante">
+                    <div class="nombre">Steven Montalvan</div>
+                    <div class="rol">Lógica Central de POO y Estructura Base</div>
+                </div>
+                <div class="integrante">
+                    <div class="nombre">Jonathan Bravo</div>
+                    <div class="rol">Persistencia de Datos y CRUD</div>
+                </div>
+                <div class="integrante">
+                    <div class="nombre">Sebastian Nevares</div>
+                    <div class="rol">Interfaz de Consola, Validaciones y Flujo General</div>
+                </div>
+                <div class="integrante">
+                    <div class="nombre">Elias Balladares</div>
+                    <div class="rol">Interfaz HTML de Apoyo y Documentación</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Objetivo -->
+    <div class="contenedor-presentacion">
+        <div class="seccion">
+            <h2>Objetivo del Sistema</h2>
+            <p>Desarrollar una aplicación en Python que simule la gestión completa de una farmacia, permitiendo el registro, consulta, modificación y eliminación de productos mediante un sistema con menús interactivos y persistencia de datos en archivos.</p>
+        </div>
+
+        <!-- Descripción del problema -->
+        <div class="seccion">
+            <h2>Descripción del Problema</h2>
+            <p>Las pequeñas farmacias carecen de sistemas digitales accesibles para administrar su inventario, ventas y reportes. La gestión manual genera errores, pérdida de información y dificultad para tomar decisiones. Este sistema ofrece una solución educativa y funcional que simula los procesos clave de una farmacia.</p>
+        </div>
+
+        <!-- Funcionalidades principales -->
+        <div class="seccion">
+            <h2>Funcionalidades Principales</h2>
+            <ul>
+                <li>Menú principal interactivo</li>
+                <li>Menús secundarios por módulo</li>
+                <li>Programación Orientada a Objetos (POO)</li>
+                <li>Clases: Producto y Farmacia</li>
+                <li>CRUD completo (Crear, Leer, Actualizar, Eliminar)</li>
+                <li>Búsqueda por nombre o código</li>
+                <li>Validación de datos en entrada</li>
+                <li>Persistencia en archivos (TXT)</li>
+                <li>Lectura y escritura de archivos</li>
+                <li>Código modular y comentado</li>
+            </ul>
+        </div>
+    </div>
+        <!-- Capturas de pantalla -->
+    <div class="contenedor-presentacion">
+        <div class="seccion">
+            <h2>Capturas del Sistema</h2>
+            <div class="capturas">
+                <div class="captura-item">
+                    <img src="imagenes/menu_principal.avif" alt="Menú principal" />
+                    <div class="caption">Menú principal con opciones</div>
+                </div>
+                <div class="captura-item">
+                    <img src="imagenes/gestion_productos.avif" alt="Gestión de productos" />
+                    <div class="caption">Gestión de productos (CRUD)</div>
+                </div>
+                <div class="captura-item">
+                    <img src="imagenes/archivos_persistencia.avif" alt="Persistencia en archivos" />
+                    <div class="caption">Persistencia y carga de datos</div>
+                </div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.95rem; color: rgba(255,255,255,0.5);">
+                Las imágenes son ilustrativas. El sistema se ejecuta en consola Python.
+            </p>
+        </div>
+    </div>
+        <!-- Explicación breve -->
+    <div class="contenedor-presentacion">
+        <div class="seccion">
+            <h2>Explicación del Funcionamiento</h2>
+            <p>El sistema presenta un menú principal que permite navegar entre las diferentes secciones: gestión de productos, reportes y configuración. Utiliza clases (Producto, Farmacia) para representar la lógica del negocio, y almacena toda la información en archivos JSON para garantizar la persistencia. Cada operación (registro, consulta, modificación, eliminación) valida los datos ingresados y muestra mensajes claros al usuario.</p>
+        </div>
+
+        <!-- Tecnologías -->
+        <div class="seccion">
+            <h2>Tecnologías Utilizadas</h2>
+            <div class="tecnologias">
+                <span class="tech"><strong>Python</strong> 3.10+</span>
+                <span class="tech"><strong>POO</strong> (Clases y Objetos)</span>
+                <span class="tech"><strong>TXT</strong> para persistencia</span>
+                <span class="tech"><strong>HTML5 + CSS3</strong> (presentación)</span>
+            </div>
+        </div>
+
+        <!-- Conclusiones -->
+        <div class="seccion">
+            <h2>Conclusiones</h2>
+            <p>El proyecto PyPharma Manager demuestra la aplicación práctica de los conceptos de Programación Orientada a Objetos en Python, logrando un sistema funcional, modular y persistente. La implementación de menús interactivos, validación de datos y almacenamiento en archivos permite simular de manera eficiente la gestión de una farmacia, sentando las bases para futuras expansiones como interfaz gráfica o conexión a bases de datos.</p>
+        </div>
+
+        <!-- Botón volver -->
+        <a href="index.html" class="btn-volver">← Volver a la portada</a>
+    </div>
+
+</body>
+
+</html>
