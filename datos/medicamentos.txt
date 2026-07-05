@@ -1,8 +1,8 @@
-Paracetamol,90
-Ibuprofeno,24
-Amoxicilina,34
-Losartan,13
-Omeprazol,10
-Aspirina,34
-Tukol,10
-Bismutol,7
+Paracetamol,90,0.50
+Ibuprofeno,24,0.85
+Amoxicilina,34,0.45
+Losartan,13,0.50
+Omeprazol,10,0.80
+Aspirina,34,0.90
+Tukol,10,3.50
+Bismutol,7,1.80
