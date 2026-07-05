@@ -1,8 +1,8 @@
-Paracetamol
-Ibuprofeno
-Amoxicilina
-Losartan
-Omeprazol
-Aspirina
-Suero Oral 
-Bismutol
+Paracetamol,90
+Ibuprofeno,24
+Amoxicilina,34
+Losartan,13
+Omeprazol,10
+Aspirina,34
+Tukol,10
+Bismutol,7
