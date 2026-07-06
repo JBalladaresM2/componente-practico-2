@@ -110,7 +110,7 @@ def menu_registrar(medicamentos):
     precio = leer_float("Precio: $")
     stock = leer_entero("Stock inicial: ")
 
-    nuevo = Medicamento(stock, nombre, stock)
+    nuevo = Medicamento(stock, nombre, precio)
     medicamentos.append(nuevo)
     guardar_medicamentos(medicamentos)
     print("✅ Medicamento registrado correctamente.")
