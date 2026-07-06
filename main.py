@@ -42,7 +42,7 @@ def cargar_medicamentos():
 
 def guardar_medicamentos(medicamentos):
     # Convierte los objetos Medicamento al formato de Jonathan y los guarda.
-    cache = [[med.nombre, med.stock, med.precio] for med in medicamentos]
+    cache = [[med.stock, med.nombre, med.precio] for med in medicamentos]
     actualizar(ruta_inventario, cache)
 
 def buscar_por_nombre(medicamentos, nombre):
@@ -203,7 +203,7 @@ def menu_crear_pedido(medicamentos):
 
     pedido.mostrar_resumen()
     guardar_medicamentos(medicamentos)  # persiste el stock ya descontado
-    print("✅ Pedido registrado. Stock actualizado en datos/inventario.txt")
+    print("✅ Pedido registrado. Stock actualizado en datos/inventario_medicinas.txt")
 
 def menu_inspeccionar_archivo():
     # Demostración de manejo de streams:
