@@ -110,7 +110,7 @@ def menu_registrar(medicamentos):
     precio = leer_float("Precio: $")
     stock = leer_entero("Stock inicial: ")
 
-    nuevo = Medicamento(nombre, precio, stock)
+    nuevo = Medicamento(stock, nombre, stock)
     medicamentos.append(nuevo)
     guardar_medicamentos(medicamentos)
     print("✅ Medicamento registrado correctamente.")
@@ -211,8 +211,8 @@ def menu_inspeccionar_archivo():
     # closed), lee una porción con read(), reporta la posición del cursor
     # con tell(), y usa seek() para regresar al inicio antes de leer
     # línea por línea con readline().
-    print("\n--- Inspección del stream (datos/inventario.txt) ---")
-    ruta = os.path.join("datos", "inventario.txt")
+    print("\n--- Inspección del stream (datos/inventario_medicinas.txt) ---")
+    ruta = os.path.join("datos", "inventario_medicinas.txt")
 
     if not os.path.exists(ruta):
         print("⚠ Todavía no existe el archivo. Registra al menos un medicamento primero.")

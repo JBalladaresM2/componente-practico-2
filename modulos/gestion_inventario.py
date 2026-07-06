@@ -15,8 +15,8 @@ def inventario(ruta):#Funcion que crea la lista a traves de un archivo de texto
 def actualizar(ruta, inventario_cache):#Funcion que actualiza el archivo de texto
     try:#Busca un error en el codigo
         archivo_farmacos = open(ruta, "w")#Abre el archivo de texto y lo empieza a escribir
-        for farmaco, stock, precio in inventario_cache:#Recorre cada item de la lista
-            archivo_farmacos.write(f"{farmaco},{stock},{precio}\n")#Escribe cada elemento de la lista en el archivo txt
+        for stock, nedicamento, precio in inventario_cache:#Recorre cada item de la lista
+            archivo_farmacos.write(f"{stock},{nedicamento},{precio}\n")#Escribe cada elemento de la lista en el archivo txt
         print("Inventario guardado con exito")#Se imprime el mensaje que el inventario fue guardado correctamente
         archivo_farmacos.close()#Se cierra el archivo correctamente
     except:#Si encuentra un error , sigue la linea de codigo de abajo
