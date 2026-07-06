@@ -7,3 +7,4 @@
 10,Tukol,3.5
 7,Bismutol,1.8
 19,Cefalexina,0.2
+30,Loratadina,0.25
