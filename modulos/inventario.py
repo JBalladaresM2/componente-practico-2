@@ -1,21 +1,23 @@
-def inventario():
-    datos_farmacos = []
-    try:
-       archivo_farmacos = open("../datos/medicamentos.txt", "r")
-       for linea in archivo_farmacos:
-              farmaco = linea.strip().split(",")
-              datos_farmacos.append(farmaco)
-       archivo_farmacos.close()
-       return datos_farmacos
-    except:
-        print("Error en ruta del archivo")
+#../modulos/inventario.py
+from modelos.clase_medicamento import Medicamento #Importa un archio py
+def inventario():#Funcion que crea la lista a traves de un archivo de texto
+    datos_farmacos = []#Se crea la variable datos_farmacos , la cual tomara el rol de lista
+    try:#Busca un error en el codigo
+       archivo_farmacos = open("../datos/medicamentos.txt", "r")#Busca el archivo de texto , lo abre y lo guarda en la variable archivo_farmacos
+       for linea in archivo_farmacos:#Recorre el archivo linea por linea
+              farmaco = linea.strip().split(",")#Agarra la linea , luego borra los saltos de linea y separa la linea cuando llega a una coma en dos formando una tupla
+              datos_farmacos.append(farmaco)#Se guarda la tupla en el arreglo
+       archivo_farmacos.close()#Se cierra el archivo correctamente
+       return datos_farmacos#Retorna el arreglo
+    except:#Si hay un error sale el siguiente mensaje
+        print("Error en ruta del archivo")#Imprime este mensaje por si sale un error en la ruta de archivo
 
-def actualizar(inventario_cache):
-    try:
-        archivo_farmacos = open("../datos/medicamentos.txt", "w") 
-        for farmaco, stock, precio in inventario_cache:
-            archivo_farmacos.write(f"{farmaco},{stock},{precio}\n")
-        print("Inventario guardado con exito")
-        archivo_farmacos.close()
-    except:
-        print("Error en ruta del archivo")
+def actualizar(inventario_cache):#Funcion que actualiza el archivo de texto
+    try:#Busca un error en el codigo
+        archivo_farmacos = open("../datos/medicamentos.txt", "w")#Abre el archivo de texto y lo empieza a escribir
+        for farmaco, stock, precio in inventario_cache:#Recorre cada item de la lista
+            archivo_farmacos.write(f"{farmaco},{stock},{precio}\n")#Escribe cada elemento de la lista en el archivo txt
+        print("Inventario guardado con exito")#Se imprime el mensaje que el inventario fue guardado correctamente
+        archivo_farmacos.close()#Se cierra el archivo correctamente
+    except:#Si encuentra un error , sigue la linea de codigo de abajo
+        print("Error en ruta del archivo")#Imprime este mensaje por si sale un error en la ruta del archivo
