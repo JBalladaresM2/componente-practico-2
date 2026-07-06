@@ -25,22 +25,27 @@ from modulos.inventario import inventario, actualizar
 # PUENTE ENTRE EL FORMATO DE JONATHAN Y LOS OBJETOS DE STEVEN
 # ---------------------------------------------------------------
 
+ruta_inventario = "datos/medicamentos.txt"
+medicamentos = []
+
 def cargar_medicamentos():
     # Lee el archivo (vía inventario()) y crea objetos Medicamento.
-    lista_cruda = inventario()  # [[nombre, stock, precio], ...] en texto
-    medicamentos = []
-    if lista_cruda:
-        for fila in lista_cruda:
-            nombre, stock, precio = fila
-            medicamentos.append(Medicamento(nombre, float(precio), int(stock)))
-    return medicamentos
-
+    datos = inventario(ruta_inventario)  # [[nombre, stock, precio], ...]
+    if datos is None:
+        return []
+    
+    medicamentos_lista = []
+    for item in datos:
+        if len(item) == 3:
+            nombre, stock, precio = item
+            # La clase Medicamento recibe (nombre, precio, stock)
+            medicamentos_lista.append(Medicamento(nombre, float(precio), int(stock)))
+    return medicamentos_lista
 
 def guardar_medicamentos(medicamentos):
     # Convierte los objetos Medicamento al formato de Jonathan y los guarda.
     cache = [[med.nombre, med.stock, med.precio] for med in medicamentos]
-    actualizar(cache)
-
+    actualizar(ruta_inventario, cache)
 
 def buscar_por_nombre(medicamentos, nombre):
     # Búsqueda exacta por nombre (no hay código único en esta versión).
@@ -49,12 +54,10 @@ def buscar_por_nombre(medicamentos, nombre):
             return med
     return None
 
-
 def buscar_coincidencias(medicamentos, texto):
     # Búsqueda parcial por nombre.
     texto = texto.lower()
     return [m for m in medicamentos if texto in m.nombre.lower()]
-
 
 # ---------------------------------------------------------------
 # FUNCIONES DE VALIDACIÓN
@@ -70,7 +73,6 @@ def leer_texto(mensaje):
             return valor
         print("⚠ Este campo no puede estar vacío. Intente nuevamente.")
 
-
 def leer_float(mensaje):
     # Pide un número decimal (precio) y valida el tipo de dato.
     while True:
@@ -84,7 +86,6 @@ def leer_float(mensaje):
         except ValueError:
             print("⚠ Debe ingresar un número válido (ej: 12.50).")
 
-
 def leer_entero(mensaje):
     # Pide un número entero (stock/cantidad) y valida el tipo de dato.
     while True:
@@ -97,7 +98,6 @@ def leer_entero(mensaje):
             return numero
         except ValueError:
             print("⚠ Debe ingresar un número entero válido (ej: 10).")
-
 
 # ---------------------------------------------------------------
 # MENÚS SECUNDARIOS
@@ -117,7 +117,6 @@ def menu_registrar(medicamentos):
     guardar_medicamentos(medicamentos)
     print("✅ Medicamento registrado correctamente.")
 
-
 def menu_consultar(medicamentos):
     print("\n--- Inventario de medicamentos ---")
     if not medicamentos:
@@ -125,7 +124,6 @@ def menu_consultar(medicamentos):
         return
     for med in medicamentos:
         med.mostrar_info()
-
 
 def menu_buscar(medicamentos):
     print("\n--- Buscar medicamento ---")
@@ -136,7 +134,6 @@ def menu_buscar(medicamentos):
     else:
         for med in resultados:
             med.mostrar_info()
-
 
 def menu_actualizar(medicamentos):
     print("\n--- Actualizar medicamento ---")
@@ -169,7 +166,6 @@ def menu_actualizar(medicamentos):
     else:
         print("⚠ Opción no válida.")
 
-
 def menu_eliminar(medicamentos):
     print("\n--- Eliminar medicamento ---")
     nombre = leer_texto("Nombre del medicamento a eliminar: ")
@@ -180,7 +176,6 @@ def menu_eliminar(medicamentos):
     medicamentos.remove(med)
     guardar_medicamentos(medicamentos)
     print("✅ Medicamento eliminado.")
-
 
 def menu_crear_pedido(medicamentos):
     print("\n--- Crear nuevo pedido ---")
@@ -211,7 +206,6 @@ def menu_crear_pedido(medicamentos):
     pedido.mostrar_resumen()
     guardar_medicamentos(medicamentos)  # persiste el stock ya descontado
     print("✅ Pedido registrado. Stock actualizado en datos/medicamentos.txt")
-
 
 def menu_inspeccionar_archivo():
     # Demostración de manejo de streams:
@@ -247,7 +241,6 @@ def menu_inspeccionar_archivo():
     archivo.close()  # liberamos el recurso para evitar fugas de memoria
     print(f"Archivo cerrado correctamente (archivo.closed): {archivo.closed}")
 
-
 # ---------------------------------------------------------------
 # MENÚ PRINCIPAL Y FLUJO GENERAL DEL PROGRAMA
 # ---------------------------------------------------------------
@@ -263,9 +256,8 @@ def mostrar_menu():
     print("7. Inspeccionar archivo (streams: read, tell, seek)")
     print("8. Salir")
 
-
 def main():
-    medicamentos = cargar_medicamentos()  # persistencia: se carga lo guardado antes
+    medicamentos = cargar_medicamentos()  # persistencia: se cargan loa datos guardados
 
     while True:
         mostrar_menu()
@@ -290,7 +282,6 @@ def main():
             break
         else:
             print("⚠ Opción no válida. Intente de nuevo.")
-
 
 if __name__ == "__main__":
     main()
