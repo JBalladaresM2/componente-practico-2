@@ -1,35 +1,32 @@
-"""
-main.py
-========
-Sistema de Farmacia - Grupo 7
-Encargado principal de este archivo: SEBASTIAN
+# main.py
+# ========
+# Sistema de Farmacia - Grupo 7
+# Encargado principal de este archivo: SEBASTIAN
 
-Responsabilidades de esta parte:
- - Menú principal y menús secundarios (interfaz por consola).
- - Validación de datos ingresados por el usuario (try/except).
- - Integrar la clase Medicamento y Pedido (Steven) con las funciones
-   de persistencia inventario()/actualizar() (Jonathan).
+# Responsabilidades de esta parte:
+#  - Menú principal y menús secundarios (interfaz por consola).
+#  - Validación de datos ingresados por el usuario (try/except).
+#  - Integrar la clase Medicamento y Pedido (Steven) con las funciones
+#    de persistencia inventario()/actualizar() (Jonathan).
 
-NOTA IMPORTANTE:
-La función inventario() de Jonathan devuelve una lista de listas de
-texto (ej: ["Paracetamol", "90", "0.50"]) en el orden nombre, stock,
-precio (así está guardado en datos/medicamentos.txt). La clase
-Medicamento en cambio recibe (nombre, precio, stock). Por eso este
-archivo se encarga de "traducir" entre ambos formatos.
-"""
+# NOTA IMPORTANTE:
+# La función inventario() de Jonathan devuelve una lista de listas de
+# texto (ej: ["Paracetamol", "90", "0.50"]) en el orden nombre, stock,
+# precio (así está guardado en datos/medicamentos.txt). La clase
+# Medicamento en cambio recibe (nombre, precio, stock). Por eso este
+# archivo se encarga de "traducir" entre ambos formatos.
 
 import os
 from clases.medicamento import Medicamento
 from clases.pedido import Pedido
 from modulos.inventario import inventario, actualizar
 
-
 # ---------------------------------------------------------------
 # PUENTE ENTRE EL FORMATO DE JONATHAN Y LOS OBJETOS DE STEVEN
 # ---------------------------------------------------------------
 
 def cargar_medicamentos():
-    """Lee el archivo (vía inventario()) y crea objetos Medicamento."""
+    # Lee el archivo (vía inventario()) y crea objetos Medicamento.
     lista_cruda = inventario()  # [[nombre, stock, precio], ...] en texto
     medicamentos = []
     if lista_cruda:
@@ -40,13 +37,13 @@ def cargar_medicamentos():
 
 
 def guardar_medicamentos(medicamentos):
-    """Convierte los objetos Medicamento al formato de Jonathan y los guarda."""
+    # Convierte los objetos Medicamento al formato de Jonathan y los guarda.
     cache = [[med.nombre, med.stock, med.precio] for med in medicamentos]
     actualizar(cache)
 
 
 def buscar_por_nombre(medicamentos, nombre):
-    """Búsqueda exacta por nombre (no hay código único en esta versión)."""
+    # Búsqueda exacta por nombre (no hay código único en esta versión).
     for med in medicamentos:
         if med.nombre.lower() == nombre.lower():
             return med
@@ -54,7 +51,7 @@ def buscar_por_nombre(medicamentos, nombre):
 
 
 def buscar_coincidencias(medicamentos, texto):
-    """Búsqueda parcial por nombre."""
+    # Búsqueda parcial por nombre.
     texto = texto.lower()
     return [m for m in medicamentos if texto in m.nombre.lower()]
 
@@ -66,7 +63,7 @@ def buscar_coincidencias(medicamentos, texto):
 # ---------------------------------------------------------------
 
 def leer_texto(mensaje):
-    """Pide un texto y valida que no esté vacío."""
+    # Pide un texto y valida que no esté vacío.
     while True:
         valor = input(mensaje).strip()
         if valor:
@@ -75,7 +72,7 @@ def leer_texto(mensaje):
 
 
 def leer_float(mensaje):
-    """Pide un número decimal (precio) y valida el tipo de dato."""
+    # Pide un número decimal (precio) y valida el tipo de dato.
     while True:
         valor = input(mensaje).strip()
         try:
@@ -89,7 +86,7 @@ def leer_float(mensaje):
 
 
 def leer_entero(mensaje):
-    """Pide un número entero (stock/cantidad) y valida el tipo de dato."""
+    # Pide un número entero (stock/cantidad) y valida el tipo de dato.
     while True:
         valor = input(mensaje).strip()
         try:
@@ -217,13 +214,11 @@ def menu_crear_pedido(medicamentos):
 
 
 def menu_inspeccionar_archivo():
-    """
-    Demostración de manejo de streams:
-    abre el archivo de medicamentos, muestra sus atributos (name, mode,
-    closed), lee una porción con read(), reporta la posición del cursor
-    con tell(), y usa seek() para regresar al inicio antes de leer
-    línea por línea con readline().
-    """
+    # Demostración de manejo de streams:
+    # abre el archivo de medicamentos, muestra sus atributos (name, mode,
+    # closed), lee una porción con read(), reporta la posición del cursor
+    # con tell(), y usa seek() para regresar al inicio antes de leer
+    # línea por línea con readline().
     print("\n--- Inspección del stream (datos/medicamentos.txt) ---")
     ruta = os.path.join("datos", "medicamentos.txt")
 
