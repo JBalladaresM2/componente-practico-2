@@ -12,17 +12,18 @@
 import os
 from clases.medicamento import Medicamento
 from clases.pedido import Pedido
-from modulos.gestion_inventario import cargar_inventario, actualizar_inventario
+from modulos.gestion_archivos import cargar_archivo, actualizar_archivo
 
 # ---------------------------------------------------------------
 # PUENTE ENTRE EL FORMATO DE JONATHAN Y LOS OBJETOS DE STEVEN
 # ---------------------------------------------------------------
 
-ruta_inventario = "datos/inventario_medicinas.txt"
+RUTA_INV_MED = "datos/inventario_medicinas.txt"
+RUTA_REG_PED = "datos/registro_pedidos.txt"
 
 def cargar_medicamentos():
     # Lee el archivo (vía inventario()) y crea objetos Medicamento.
-    datos = cargar_inventario(ruta_inventario)
+    datos = cargar_archivo(RUTA_INV_MED)
     if datos is None:
         return []
 
@@ -32,10 +33,22 @@ def cargar_medicamentos():
         medicamentos_lista.append(Medicamento(stock, nombre, precio))
     return medicamentos_lista
 
+def cargar_pedidos():
+    # Lee el archivo (vía inventario()) y crea objetos Medicamento.
+    datos = cargar_archivo(RUTA_REG_PED)
+    if datos is None:
+        return []
+    return datos
+
 def guardar_medicamentos(medicamentos):
     # Convierte los objetos Medicamento al formato de Jonathan y los guarda.
     cache = [[med.stock, med.nombre, med.precio] for med in medicamentos]
-    actualizar_inventario(ruta_inventario, cache)
+    actualizar_archivo(RUTA_INV_MED, cache)
+
+def guardar_pedidos(ventas):
+    # Convierte los objetos Medicamento al formato de Jonathan y los guarda.
+    cache = [[venta[0], venta[1], venta[2]] for venta in ventas]
+    actualizar_archivo(RUTA_REG_PED, cache)
 
 def buscar_por_nombre(medicamentos, nombre):
     # Búsqueda exacta por nombre (no hay código único en esta versión).
@@ -195,7 +208,7 @@ def menu_eliminar(medicamentos):
     input()
     os.system("cls")
 
-def menu_crear_pedido(medicamentos):
+def menu_crear_pedido(medicamentos, ventas):
     print("--- Crear nuevo pedido ---")
     cliente = leer_texto("Nombre del cliente: ")
     pedido = Pedido(cliente)
@@ -216,6 +229,7 @@ def menu_crear_pedido(medicamentos):
                 os.system("cls")
             else:
                 pedido.agregar_medicamento(med, cantidad)
+                ventas.append((cantidad, med.nombre, med.precio))
 
         otro = leer_texto("¿Agregar otro medicamento? (s/n): ").lower()
         if otro != "s":
@@ -231,10 +245,26 @@ def menu_crear_pedido(medicamentos):
 
     pedido.mostrar_resumen()
     guardar_medicamentos(medicamentos)  # persiste el stock ya descontado
+    guardar_pedidos(ventas)
     print("Pedido registrado.")
     input()
     os.system("cls")
 
+def menu_consultar_pedidos(pedidos):
+    print("--- Registros de Pedidos ---")
+    if not pedidos:
+        print("No hay pedidos registrados.")
+        input()
+        os.system("cls")
+        return
+    for venta in pedidos:
+        print("----------------------------")
+        print(f"Cantidad: {venta[0]}")
+        print(f"Nombre: {venta[1]}")
+        print(f"Precio: ${venta[2]}")
+        print("----------------------------")
+    input()
+    os.system("cls")
 # ---------------------------------------------------------------
 # MENÚ PRINCIPAL Y FLUJO GENERAL DEL PROGRAMA
 # ---------------------------------------------------------------
@@ -253,6 +283,7 @@ def mostrar_menu():
     print("8. Salir")
 # APLICACION
 medicamentos = cargar_medicamentos()  # persistencia: se cargan loa datos guardados
+pedidos = cargar_pedidos()
 
 while True:
     mostrar_menu()
@@ -270,9 +301,9 @@ while True:
     elif opcion == "5":
         menu_eliminar(medicamentos)
     elif opcion == "6":
-        menu_crear_pedido(medicamentos)
-    elif opcion == "6":
-        continue
+        menu_crear_pedido(medicamentos, pedidos)
+    elif opcion == "7":
+        menu_consultar_pedidos(pedidos)
     elif opcion == "8":
         print("¡Hasta luego!")
         break

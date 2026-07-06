@@ -3,31 +3,29 @@
 # procesar la información en estructuras de datos (listas de tuplas) y guardar 
 # las actualizaciones de stock y precios de vuelta en el almacenamiento persistente.
 
-def cargar_inventario(ruta):
+def cargar_archivo(ruta):
     # Carga el inventario desde un archivo de texto y lo convierte en lista
-    datos_farmacos = []
+    datos_archivo = []
     try:
-        archivo_farmacos = open(ruta, "r")
-        for linea in archivo_farmacos:
+        archivo = open(ruta, "r")
+        for linea in archivo:
             # Limpia la línea y separa los datos por comas
-            stock, nombre, precio = linea.strip().split(",")
+            entero, texto, decimal = linea.strip().split(",")
             # Guarda los datos con su tipo de variable correspondiente
-            datos_farmacos.append((int(stock), nombre, float(precio)))
-        archivo_farmacos.close()
-        return datos_farmacos
+            datos_archivo.append((int(entero), texto, float(decimal)))
+        archivo.close()
+        return datos_archivo
     except:
         # Manejo de error si el archivo no existe o la ruta es incorrecta
-        print("Error... funcion inventario")
+        print(f"Error... funcion cargar archivo - {ruta}")
 
-def actualizar_inventario(ruta, inventario_cache):
+def actualizar_archivo(ruta, datos_cache):
     # Sobrescribe el archivo de texto con los datos actualizados del inventario
     try:
-        archivo_farmacos = open(ruta, "w")
-        for stock, nombre, precio in inventario_cache:
+        archivo = open(ruta, "w")
+        for entero, texto, decimal in datos_cache:
             # Escribe cada fármaco manteniendo el formato CSV
-            archivo_farmacos.write(f"{stock},{nombre},{precio}\n")
-        
-        print("Inventario actualizado con éxito")
-        archivo_farmacos.close()
+            archivo.write(f"{entero},{texto},{decimal}\n")
+        archivo.close()
     except:
-        print("Error... funcion actualizar")
+        print(f"Error... funcion actualizar archivo - {ruta}")
