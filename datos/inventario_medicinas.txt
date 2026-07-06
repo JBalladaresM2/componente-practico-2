@@ -1,4 +1,4 @@
-16,Paracetamol,0.3
+11,Paracetamol,0.3
 24,Ibuprofeno,0.85
 34,Amoxicilina,0.45
 13,Losartan,0.5
