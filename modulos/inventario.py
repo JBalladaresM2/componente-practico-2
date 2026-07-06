@@ -1,4 +1,5 @@
 #../modulos/inventario.py
+from modelos.clase_medicamento import Medicamento #Importa un archio py
 def inventario():#Funcion que crea la lista a traves de un archivo de texto
     datos_farmacos = []#Se crea la variable datos_farmacos , la cual tomara el rol de lista
     try:#Busca un error en el codigo
