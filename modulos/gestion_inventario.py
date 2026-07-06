@@ -4,8 +4,9 @@ def inventario(ruta):#Funcion que crea la lista a traves de un archivo de texto
     try:#Busca un error en el codigo
        archivo_farmacos = open(ruta, "r")#Busca el archivo de texto , lo abre y lo guarda en la variable archivo_farmacos
        for linea in archivo_farmacos:#Recorre el archivo linea por linea
-              medicamento, stock, precio = linea.strip().split(",")#Agarra la linea , luego borra los saltos de linea y separa la linea cuando llega a una coma en dos formando una tupla
-              datos_farmacos.append([medicamento, int(stock), float(precio)])#Se guarda la tupla en el arreglo
+              stock, medicamento, precio = linea.strip().split(",")#Agarra la linea , luego borra los saltos de linea y separa la linea cuando llega a una coma en dos formando una tupla
+              datos_farmacos.append((int(stock), medicamento, float(precio)))#Se guarda la tupla en el arreglo
+       print("Inventario cargado con exito")
        archivo_farmacos.close()#Se cierra el archivo correctamente
        return datos_farmacos#Retorna el arreglo
     except:#Si hay un error sale el siguiente mensaje

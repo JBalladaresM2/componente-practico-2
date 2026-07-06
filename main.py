@@ -19,13 +19,13 @@
 import os
 from clases.medicamento import Medicamento
 from clases.pedido import Pedido
-from modulos.inventario import inventario, actualizar
+from modulos.gestion_inventario import inventario, actualizar
 
 # ---------------------------------------------------------------
 # PUENTE ENTRE EL FORMATO DE JONATHAN Y LOS OBJETOS DE STEVEN
 # ---------------------------------------------------------------
 
-ruta_inventario = "datos/medicamentos.txt"
+ruta_inventario = "datos/inventario.txt"
 medicamentos = []
 
 def cargar_medicamentos():
@@ -35,11 +35,9 @@ def cargar_medicamentos():
         return []
     
     medicamentos_lista = []
-    for item in datos:
-        if len(item) == 3:
-            nombre, stock, precio = item
-            # La clase Medicamento recibe (nombre, precio, stock)
-            medicamentos_lista.append(Medicamento(nombre, float(precio), int(stock)))
+    for stock, nombre, precio in datos:
+        # La clase Medicamento recibe (nombre, precio, stock)
+        medicamentos_lista.append(Medicamento(stock, nombre, precio))
     return medicamentos_lista
 
 def guardar_medicamentos(medicamentos):
@@ -214,13 +212,12 @@ def menu_inspeccionar_archivo():
     # con tell(), y usa seek() para regresar al inicio antes de leer
     # línea por línea con readline().
     print("\n--- Inspección del stream (datos/medicamentos.txt) ---")
-    ruta = os.path.join("datos", "medicamentos.txt")
 
-    if not os.path.exists(ruta):
+    if not os.path.exists(ruta_inventario):
         print("⚠ Todavía no existe el archivo. Registra al menos un medicamento primero.")
         return
 
-    archivo = open(ruta, "r", encoding="utf-8")  # abrimos el stream manualmente
+    archivo = open(ruta_inventario, "r", encoding="utf-8")  # abrimos el stream manualmente
 
     print(f"Nombre del archivo (archivo.name): {archivo.name}")
     print(f"Modo de apertura (archivo.mode): {archivo.mode}")

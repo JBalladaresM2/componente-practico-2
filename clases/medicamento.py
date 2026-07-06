@@ -5,13 +5,13 @@
 
 class Medicamento:
 
-    def __init__(self, nombre, precio, stock):
+    def __init__(self, stock, nombre, precio):
         # Este método es el "constructor". Se ejecuta SOLO
         # cuando se crea un medicamento nuevo, y guarda sus datos.
         # "self" significa "este medicamento en específico" (no otro).
+        self.stock = stock          # Guarda cuántas unidades hay, ej: 100
         self.nombre = nombre        # Guarda el nombre, ej: "Paracetamol"
         self.precio = precio        # Guarda el precio, ej: 2.50
-        self.stock = stock          # Guarda cuántas unidades hay, ej: 100
 
     def aplicar_descuento(self, porcentaje):
         # Baja el precio según un porcentaje.
