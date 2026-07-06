@@ -1,8 +1,0 @@
-Paracetamol,40,0.5
-Ibuprofeno,24,0.85
-Amoxicilina,34,0.45
-Losartan,13,0.5
-Omeprazol,10,0.8
-Aspirina,34,0.9
-Tukol,10,3.5
-Bismutol,7,1.8

@@ -25,7 +25,7 @@ from modulos.gestion_inventario import inventario, actualizar
 # PUENTE ENTRE EL FORMATO DE JONATHAN Y LOS OBJETOS DE STEVEN
 # ---------------------------------------------------------------
 
-ruta_inventario = "datos/inventario.txt"
+ruta_inventario = "datos/inventario_medicinas.txt"
 medicamentos = []
 
 def cargar_medicamentos():
@@ -203,7 +203,7 @@ def menu_crear_pedido(medicamentos):
 
     pedido.mostrar_resumen()
     guardar_medicamentos(medicamentos)  # persiste el stock ya descontado
-    print("✅ Pedido registrado. Stock actualizado en datos/medicamentos.txt")
+    print("✅ Pedido registrado. Stock actualizado en datos/inventario.txt")
 
 def menu_inspeccionar_archivo():
     # Demostración de manejo de streams:
@@ -211,13 +211,14 @@ def menu_inspeccionar_archivo():
     # closed), lee una porción con read(), reporta la posición del cursor
     # con tell(), y usa seek() para regresar al inicio antes de leer
     # línea por línea con readline().
-    print("\n--- Inspección del stream (datos/medicamentos.txt) ---")
+    print("\n--- Inspección del stream (datos/inventario.txt) ---")
+    ruta = os.path.join("datos", "inventario.txt")
 
-    if not os.path.exists(ruta_inventario):
+    if not os.path.exists(ruta):
         print("⚠ Todavía no existe el archivo. Registra al menos un medicamento primero.")
         return
 
-    archivo = open(ruta_inventario, "r", encoding="utf-8")  # abrimos el stream manualmente
+    archivo = open(ruta, "r", encoding="utf-8")  # abrimos el stream manualmente
 
     print(f"Nombre del archivo (archivo.name): {archivo.name}")
     print(f"Modo de apertura (archivo.mode): {archivo.mode}")
