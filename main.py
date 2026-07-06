@@ -47,7 +47,7 @@ def guardar_medicamentos(medicamentos):
 
 def guardar_pedidos(ventas):
     # Convierte los objetos Medicamento al formato de Jonathan y los guarda.
-    cache = [[venta[0], venta[1], venta[2]] for venta in ventas]
+    cache = [[venta[0], venta[1], venta[2], venta[3]] for venta in ventas]
     actualizar_archivo(RUTA_REG_PED, cache)
 
 def buscar_por_nombre(medicamentos, nombre):
@@ -229,7 +229,7 @@ def menu_crear_pedido(medicamentos, ventas):
                 os.system("cls")
             else:
                 pedido.agregar_medicamento(med, cantidad)
-                ventas.append((cantidad, med.nombre, med.precio))
+                ventas.append((cliente, cantidad, med.nombre, med.precio))
 
         otro = leer_texto("¿Agregar otro medicamento? (s/n): ").lower()
         if otro != "s":
@@ -259,9 +259,10 @@ def menu_consultar_pedidos(pedidos):
         return
     for venta in pedidos:
         print("----------------------------")
-        print(f"Cantidad: {venta[0]}")
-        print(f"Nombre: {venta[1]}")
-        print(f"Precio: ${venta[2]}")
+        print(f"Cliente: {venta[0]}")
+        print(f"Cantidad: {venta[1]}")
+        print(f"Nombre: {venta[2]}")
+        print(f"Precio: ${venta[3]}")
         print("----------------------------")
     input()
     os.system("cls")

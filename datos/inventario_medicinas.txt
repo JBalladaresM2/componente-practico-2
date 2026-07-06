@@ -1,10 +1,10 @@
-16,Paracetamol,0.3
+15,Paracetamol,0.3
 24,Ibuprofeno,0.85
 34,Amoxicilina,0.45
 13,Losartan,0.5
 10,Omeprazol,0.8
 34,Aspirina,0.9
-10,Tukol,3.5
+9,Tukol,3.5
 7,Bismutol,1.8
-19,Cefalexina,0.2
+17,Cefalexina,0.2
 30,Loratadina,0.25
