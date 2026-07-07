@@ -1,37 +1,48 @@
-# clases/medicamento.py
-#
-# Esta clase representa UN medicamento de la farmacia.
-# Es como el "molde" con el que se crea cada medicamento nuevo.
+"""Módulo de definición de la clase Medicamento.
+
+Representa un fármaco dentro del inventario de la farmacia y gestiona
+su stock, precio y serialización de datos.
+"""
+
 
 class Medicamento:
+    """Modelo que representa un medicamento en el inventario."""
 
     def __init__(self, stock, nombre, precio):
-        # Este método es el "constructor". Se ejecuta SOLO
-        # cuando se crea un medicamento nuevo, y guarda sus datos.
-        # "self" significa "este medicamento en específico" (no otro).
-        self.stock = stock          # Guarda cuántas unidades hay, ej: 100
-        self.nombre = nombre        # Guarda el nombre, ej: "Paracetamol"
-        self.precio = precio        # Guarda el precio, ej: 2.50
+        """Inicializa un medicamento con stock, nombre y precio unitario."""
+        self.stock = int(stock)
+        self.nombre = str(nombre)
+        self.precio = float(precio)
 
     def aplicar_descuento(self, porcentaje):
-        # Baja el precio según un porcentaje.
-        # Ejemplo: si le pasas 10, le quita el 10% al precio actual.
+        """Aplica un porcentaje de descuento (0 a 100) sobre el precio actual."""
         descuento = self.precio * (porcentaje / 100)
-        self.precio = self.precio - descuento
-        print(f"Se aplicó {porcentaje}% de descuento. Nuevo precio: {self.precio}")
+        self.precio -= descuento
+        print(f"Se aplicó {porcentaje}% de descuento. Nuevo precio: ${self.precio:.2f}")
 
     def reducir_stock(self, cantidad):
-        # Se usa cuando se VENDE el medicamento, para bajar el stock.
+        """Disminuye el stock disponible al realizar una venta."""
         if cantidad > self.stock:
             print("No hay suficiente stock para esa cantidad.")
         else:
-            self.stock = self.stock - cantidad
+            self.stock -= cantidad
             print(f"Stock actualizado. Quedan {self.stock} unidades de {self.nombre}.")
 
     def mostrar_info(self):
-        # Solo IMPRIME los datos del medicamento, no cambia nada.
+        """Muestra por consola la información general del medicamento."""
         print("----------------------------")
         print(f"Nombre: {self.nombre}")
-        print(f"Precio: ${self.precio}")
+        print(f"Precio: ${self.precio:.2f}")
         print(f"Stock: {self.stock}")
         print("----------------------------")
+
+    def a_lista(self):
+        """Convierte el objeto en una lista estándar [stock, nombre, precio] para guardado."""
+        return [self.stock, self.nombre, self.precio]
+
+    @classmethod
+    def desde_lista(cls, datos):
+        """Crea una instancia de Medicamento a partir de una lista [stock, nombre, precio]."""
+        stock, nombre, precio = datos[0], datos[1], datos[2]
+        return cls(stock, nombre, precio)
+

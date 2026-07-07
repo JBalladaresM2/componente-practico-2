@@ -1,53 +1,56 @@
-# clases/pedido.py
-#
-# Esta clase representa un PEDIDO, o sea, una compra de un cliente.
-# Un pedido puede tener VARIOS medicamentos adentro, por eso usamos una lista.
+"""Módulo de definición de la clase Pedido.
 
-# Traemos la clase Medicamento porque un Pedido va a contener medicamentos.
+Representa una transacción de venta o pedido de un cliente en la farmacia,
+agrupando múltiples medicamentos y generando los registros para el historial.
+"""
+
 from clases.medicamento import Medicamento
 
 
 class Pedido:
+    """Modelo que representa un pedido de compra realizado por un cliente."""
 
     def __init__(self, cliente):
-        # Constructor: se ejecuta cuando se crea un pedido nuevo.
-        self.cliente = cliente
-        # Lista vacía donde se van guardando los medicamentos comprados.
+        """Inicializa un nuevo pedido con el nombre del cliente y una lista vacía de ítems."""
+        self.cliente = str(cliente)
         self.medicamentos = []
 
     def agregar_medicamento(self, medicamento, cantidad):
-        # Mete un medicamento dentro del pedido.
-        # Recibe el medicamento (objeto de la clase Medicamento) y la cantidad.
-
-        # Primero bajamos el stock, porque se está vendiendo.
+        """Agrega un medicamento al pedido y reduce su stock en el inventario."""
         medicamento.reducir_stock(cantidad)
-
-        # Guardamos el medicamento y su cantidad en la lista,
-        # usando un diccionario (una cajita con dos etiquetas).
         self.medicamentos.append({
             "medicamento": medicamento,
-            "cantidad": cantidad
+            "cantidad": int(cantidad)
         })
-
         print(f"Se agregó {cantidad} unidad(es) de {medicamento.nombre} al pedido de {self.cliente}.")
 
     def calcular_total(self):
-        # Recorre todos los medicamentos del pedido
-        # y va sumando (precio x cantidad) de cada uno.
-        total = 0
+        """Calcula el costo total sumando el precio por cantidad de cada ítem."""
+        total = 0.0
         for item in self.medicamentos:
-            precio_del_medicamento = item["medicamento"].precio
-            cantidad_comprada = item["cantidad"]
-            total += precio_del_medicamento * cantidad_comprada
+            precio = item["medicamento"].precio
+            cantidad = item["cantidad"]
+            total += precio * cantidad
         return total
 
     def mostrar_resumen(self):
-        # Imprime el "recibo" completo del pedido.
+        """Muestra por consola el detalle y el total a pagar del pedido."""
         print("============================")
         print(f"Resumen del pedido de: {self.cliente}")
         for item in self.medicamentos:
             med = item["medicamento"]
             cant = item["cantidad"]
-            print(f"- {med.nombre} x{cant} = ${med.precio * cant}")
-        print(f"TOTAL A PAGAR: ${self.calcular_total()}")
+            subtotal = med.precio * cant
+            print(f"- {med.nombre} x{cant} = ${subtotal:.2f}")
+        print(f"TOTAL A PAGAR: ${self.calcular_total():.2f}")
         print("============================")
+
+    def a_filas_registro(self):
+        """Genera una lista de filas [cliente, cantidad, nombre, precio] para el registro de ventas."""
+        filas = []
+        for item in self.medicamentos:
+            med = item["medicamento"]
+            cant = item["cantidad"]
+            filas.append([self.cliente, cant, med.nombre, med.precio])
+        return filas
+
