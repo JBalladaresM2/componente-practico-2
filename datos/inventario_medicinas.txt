@@ -8,3 +8,4 @@
 7,Bismutol,1.8
 17,Cefalexina,0.2
 30,Loratadina,0.25
+18,Umbramil,0.7

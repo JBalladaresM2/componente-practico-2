@@ -1,2 +1,4 @@
-2,Paracetamol,0.3
-5,Paracetamol,0.3
+Steven,2,Cefalexina,0.2
+Steven,1,Paracetamol,0.3
+Jonathan,2,Loratadina,0.25
+Steven,1,Tukol,3.5
