@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PyPharma Manager · Sistema Interactivo · Grupo 07</title>
+    <meta name="description" content="Versión web interactiva del Sistema de Farmacia PyPharma Manager, desarrollado con HTML5, CSS3 y JavaScript por el Grupo 07." />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+    <!-- Efectos de fondo de iluminación -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Contenedor de Notificaciones (Toasts) -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <!-- Encabezado Principal -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="brand">
+                <div class="logo-icon">💊</div>
+                <div class="brand-text">
+                    <h1><span>Py</span>Pharma Manager <span class="badge-web">WEB</span></h1>
+                    <p class="subtitle">Sistema de Gestión Farmacéutica · <strong>Grupo #07</strong></p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="presentacion.html" class="btn btn-outline" style="text-decoration: none;" title="Volver a la página de presentación">
+                    <span class="icon">←</span> Volver a Presentación
+                </a>
+                <button id="btnResetData" class="btn btn-outline" title="Restablecer inventario y ventas a los datos originales de Python">
+                    <span class="icon">🔄</span> Restablecer Datos
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- KPI / Tarjetas de Resumen Estadístico -->
+    <section class="kpi-section" aria-label="Resumen de estadísticas del sistema">
+        <div class="kpi-card">
+            <div class="kpi-icon icon-blue">📦</div>
+            <div class="kpi-info">
+                <span class="kpi-label">Total Medicamentos</span>
+                <strong id="kpiTotalMed" class="kpi-value">0</strong>
+            </div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon icon-green">📊</div>
+            <div class="kpi-info">
+                <span class="kpi-label">Unidades en Stock</span>
+                <strong id="kpiTotalStock" class="kpi-value">0</strong>
+            </div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon icon-purple">💰</div>
+            <div class="kpi-info">
+                <span class="kpi-label">Valor del Inventario</span>
+                <strong id="kpiValorInv" class="kpi-value">$0.00</strong>
+            </div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon icon-amber">🛒</div>
+            <div class="kpi-info">
+                <span class="kpi-label">Ventas Registradas</span>
+                <strong id="kpiTotalVentas" class="kpi-value">0</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenedor Principal con Barra de Navegación y Paneles -->
+    <div class="app-container">
+        <!-- Navegación por Pestañas (Simulando el menú de consola) -->
+        <nav class="sidebar-nav" aria-label="Menú principal de opciones">
+            <div class="nav-header">MENÚ DE SISTEMA</div>
+            <button class="nav-item active" data-tab="tab-inventario" id="navInventario">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">4. Consultar Inventario</span>
+            </button>
+            <button class="nav-item" data-tab="tab-buscar" id="navBuscar">
+                <span class="nav-icon">🔍</span>
+                <span class="nav-text">3. Buscar Medicamento</span>
+            </button>
+            <button class="nav-item" data-tab="tab-registrar" id="navRegistrar">
+                <span class="nav-icon">➕</span>
+                <span class="nav-text">1. Registrar Medicamento</span>
+            </button>
+            <button class="nav-item" data-tab="tab-actualizar" id="navActualizar">
+                <span class="nav-icon">🔄</span>
+                <span class="nav-text">2. Actualizar Medicamento</span>
+            </button>
+            <button class="nav-item" data-tab="tab-eliminar" id="navEliminar">
+                <span class="nav-icon">🗑️</span>
+                <span class="nav-text">5. Eliminar Medicamento</span>
+            </button>
+            <div class="nav-divider"></div>
+            <div class="nav-header">GESTIÓN DE VENTAS</div>
+            <button class="nav-item nav-pos" data-tab="tab-pedido" id="navPedido">
+                <span class="nav-icon">🛍️</span>
+                <span class="nav-text">6. Crear Pedido (Venta)</span>
+            </button>
+            <button class="nav-item" data-tab="tab-historial" id="navHistorial">
+                <span class="nav-icon">📜</span>
+                <span class="nav-text">7. Consultar Pedidos</span>
+            </button>
+        </nav>
+
+        <!-- Área de Contenido Principal (Paneles de Pestañas) -->
+        <main class="main-content">
+            
+            <!-- PESTAÑA 1: CONSULTAR INVENTARIO -->
+            <section id="tab-inventario" class="tab-panel active" aria-labelledby="navInventario">
+                <div class="panel-header">
+                    <div>
+                        <h2>Inventario General de Medicamentos</h2>
+                        <p class="panel-desc">Visualice y gestione el stock actual de fármacos disponibles en la farmacia.</p>
+                    </div>
+                    <div class="filter-box">
+                        <input type="text" id="filterInventario" placeholder="Filtrar por nombre..." class="input-search-small" />
+                    </div>
+                </div>
+                
+                <div class="table-responsive glass-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre del Medicamento</th>
+                                <th>Precio Unitario</th>
+                                <th>Stock Disponible</th>
+                                <th>Valor Total</th>
+                                <th>Estado</th>
+                                <th>Acciones Rápidas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaInventarioBody">
+                            <!-- Contenido generado dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PESTAÑA 2: BUSCAR MEDICAMENTO -->
+            <section id="tab-buscar" class="tab-panel" aria-labelledby="navBuscar">
+                <div class="panel-header">
+                    <div>
+                        <h2>Búsqueda Inteligente de Medicamentos</h2>
+                        <p class="panel-desc">Encuentre medicamentos en tiempo real por coincidencia parcial de nombre.</p>
+                    </div>
+                </div>
+                
+                <div class="search-box-large glass-card">
+                    <div class="input-with-icon">
+                        <span class="icon-search">🔍</span>
+                        <input type="text" id="inputBuscarMed" placeholder="Escriba el nombre del medicamento (ej. Paracetamol, Loratadina...)" autocomplete="off" />
+                    </div>
+                </div>
+
+                <div id="resultadosBusqueda" class="grid-cards mt-4">
+                    <!-- Tarjetas de resultados -->
+                </div>
+            </section>
+
+            <!-- PESTAÑA 3: REGISTRAR MEDICAMENTO -->
+            <section id="tab-registrar" class="tab-panel" aria-labelledby="navRegistrar">
+                <div class="panel-header">
+                    <div>
+                        <h2>Registrar Nuevo Medicamento</h2>
+                        <p class="panel-desc">Añada un nuevo producto al catálogo general de la farmacia.</p>
+                    </div>
+                </div>
+
+                <div class="form-container glass-card">
+                    <form id="formRegistrar" class="styled-form">
+                        <div class="form-group">
+                            <label for="regNombre">Nombre del Medicamento <span class="req">*</span></label>
+                            <input type="text" id="regNombre" required placeholder="Ej. Azitromicina 500mg" autocomplete="off" />
+                            <small class="form-help">El nombre debe ser único en el inventario.</small>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="regPrecio">Precio Unitario ($) <span class="req">*</span></label>
+                                <input type="number" id="regPrecio" step="0.01" min="0.01" required placeholder="0.00" />
+                            </div>
+                            <div class="form-group">
+                                <label for="regStock">Stock Inicial (Unidades) <span class="req">*</span></label>
+                                <input type="number" id="regStock" min="1" step="1" required placeholder="10" />
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-large">
+                                <span>➕</span> Guardar Medicamento
+                            </button>
+                            <button type="reset" class="btn btn-secondary">Limpiar Campos</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- PESTAÑA 4: ACTUALIZAR MEDICAMENTO -->
+            <section id="tab-actualizar" class="tab-panel" aria-labelledby="navActualizar">
+                <div class="panel-header">
+                    <div>
+                        <h2>Actualizar Datos o Aplicar Descuentos</h2>
+                        <p class="panel-desc">Modifique el precio, ajuste las existencias o aplique promociones a los fármacos.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <div class="form-group">
+                        <label for="selectActualizarMed">Seleccione el Medicamento a Modificar:</label>
+                        <select id="selectActualizarMed" class="input-select">
+                            <option value="">-- Seleccione un medicamento --</option>
+                        </select>
+                    </div>
+
+                    <div id="infoMedActualizar" class="info-banner hidden mt-4">
+                        <!-- Info del medicamento seleccionado -->
+                    </div>
+
+                    <div id="opcionesActualizar" class="grid-3-cols mt-6 hidden">
+                        <!-- Opción 1: Precio -->
+                        <div class="action-card">
+                            <h3>💵 Actualizar Precio</h3>
+                            <p>Modifique el costo unitario del medicamento.</p>
+                            <form id="formActPrecio" class="mt-4">
+                                <div class="form-group">
+                                    <input type="number" id="actNuevoPrecio" step="0.01" min="0.01" placeholder="Nuevo precio ($)" required />
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-full mt-2">Guardar Precio</button>
+                            </form>
+                        </div>
+
+                        <!-- Opción 2: Stock -->
+                        <div class="action-card">
+                            <h3>📦 Actualizar Stock</h3>
+                            <p>Establezca una nueva cantidad de existencias.</p>
+                            <form id="formActStock" class="mt-4">
+                                <div class="form-group">
+                                    <input type="number" id="actNuevoStock" min="0" step="1" placeholder="Nuevo stock (unidades)" required />
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-full mt-2">Guardar Stock</button>
+                            </form>
+                        </div>
+
+                        <!-- Opción 3: Descuento -->
+                        <div class="action-card">
+                            <h3>🏷️ Aplicar Descuento</h3>
+                            <p>Reduce el precio actual según el porcentaje.</p>
+                            <form id="formActDescuento" class="mt-4">
+                                <div class="form-group">
+                                    <input type="number" id="actPorcentaje" min="1" max="100" step="1" placeholder="Porcentaje (1% - 100%)" required />
+                                </div>
+                                <button type="submit" class="btn btn-accent btn-full mt-2">Aplicar Descuento</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PESTAÑA 5: ELIMINAR MEDICAMENTO -->
+            <section id="tab-eliminar" class="tab-panel" aria-labelledby="navEliminar">
+                <div class="panel-header">
+                    <div>
+                        <h2>Eliminar Medicamento del Sistema</h2>
+                        <p class="panel-desc">Retire de forma permanente fármacos discontinuados o registrados por error.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 border-danger">
+                    <div class="alert alert-warning">
+                        <span class="alert-icon">⚠️</span>
+                        <div>
+                            <strong>Atención:</strong> Al eliminar un medicamento se borrará de forma definitiva del inventario. El historial de ventas pasadas no se verá afectado.
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <label for="selectEliminarMed">Seleccione el Medicamento a Eliminar:</label>
+                        <select id="selectEliminarMed" class="input-select">
+                            <option value="">-- Seleccione un medicamento para eliminar --</option>
+                        </select>
+                    </div>
+
+                    <div id="previewEliminar" class="mt-4 hidden">
+                        <div class="info-banner banner-danger">
+                            <p>¿Está seguro que desea eliminar <strong><span id="delNombreMed"></span></strong>?</p>
+                            <p class="text-sm mt-1">Precio: $<span id="delPrecioMed"></span> | Stock actual: <span id="delStockMed"></span> unidades</p>
+                        </div>
+                        <div class="mt-4 flex-end">
+                            <button id="btnConfirmarEliminar" class="btn btn-danger btn-large">
+                                <span>🗑️</span> Confirmar y Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PESTAÑA 6: CREAR PEDIDO (PUNTO DE VENTA) -->
+            <section id="tab-pedido" class="tab-panel" aria-labelledby="navPedido">
+                <div class="panel-header">
+                    <div>
+                        <h2>Crear Nuevo Pedido · Punto de Venta (POS)</h2>
+                        <p class="panel-desc">Genere órdenes de compra para clientes, agregue múltiples ítems y descuente stock automáticamente.</p>
+                    </div>
+                </div>
+
+                <div class="grid-pos">
+                    <!-- Columna Izquierda: Selección de medicamentos -->
+                    <div class="pos-catalog glass-card p-5">
+                        <h3>1. Seleccionar Medicamentos</h3>
+                        
+                        <div class="form-group mt-3">
+                            <label for="posCliente">Nombre del Cliente <span class="req">*</span></label>
+                            <input type="text" id="posCliente" placeholder="Ej. Steven, Jonathan, María..." required autocomplete="off" />
+                        </div>
+
+                        <hr class="divider mt-4 mb-4" />
+
+                        <div class="form-group">
+                            <label for="posSelectMed">Medicamento Disponible:</label>
+                            <select id="posSelectMed" class="input-select">
+                                <option value="">-- Seleccione un producto --</option>
+                            </select>
+                        </div>
+
+                        <div id="posMedDetalle" class="info-banner hidden mt-3">
+                            <!-- Detalle stock y precio -->
+                        </div>
+
+                        <div class="form-row mt-3">
+                            <div class="form-group">
+                                <label for="posCantidad">Cantidad:</label>
+                                <input type="number" id="posCantidad" min="1" value="1" />
+                            </div>
+                            <div class="form-group flex-align-end">
+                                <button type="button" id="btnAgregarAlCarrito" class="btn btn-primary btn-full">
+                                    <span>➕</span> Agregar al Pedido
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Resumen de Pedido (Carrito) -->
+                    <div class="pos-cart glass-card p-5">
+                        <h3>2. Resumen del Pedido Actual</h3>
+                        <div class="client-badge mt-2">
+                            Cliente: <strong id="cartClienteDisplay">No especificado</strong>
+                        </div>
+
+                        <div class="cart-items-container mt-4">
+                            <table class="cart-table">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Cant.</th>
+                                        <th>P. Unit</th>
+                                        <th>Subtotal</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCarritoBody">
+                                    <tr class="empty-row">
+                                        <td colspan="5" class="text-center">El pedido está vacío. Agregue productos.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="cart-summary mt-4">
+                            <div class="summary-row total-row">
+                                <span>TOTAL A PAGAR:</span>
+                                <strong id="cartTotalDisplay">$0.00</strong>
+                            </div>
+                            
+                            <div class="cart-actions mt-4">
+                                <button type="button" id="btnConfirmarPedido" class="btn btn-success btn-large btn-full" disabled>
+                                    <span>✅</span> Registrar y Procesar Pedido
+                                </button>
+                                <button type="button" id="btnLimpiarCarrito" class="btn btn-outline btn-full mt-2" disabled>
+                                    Vaciar Pedido
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PESTAÑA 7: CONSULTAR PEDIDOS -->
+            <section id="tab-historial" class="tab-panel" aria-labelledby="navHistorial">
+                <div class="panel-header">
+                    <div>
+                        <h2>Historial General de Pedidos y Ventas</h2>
+                        <p class="panel-desc">Registro completo de todas las transacciones realizadas en la farmacia.</p>
+                    </div>
+                    <div class="filter-box">
+                        <input type="text" id="filterHistorial" placeholder="Buscar por cliente o fármaco..." class="input-search-small" />
+                    </div>
+                </div>
+
+                <div class="table-responsive glass-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre del Cliente</th>
+                                <th>Medicamento Comprado</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unit.</th>
+                                <th>Total Pagado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaHistorialBody">
+                            <!-- Filas generadas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Pie de Página -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p><strong>Estructura de Datos · Componente Práctico 2</strong> · Universidad & Facultad de Ingeniería</p>
+            <p class="text-muted">Desarrollado en HTML5, CSS3 y JavaScript Vanilla por el <strong>Grupo 07</strong> (Versión Web Equivalente al Sistema en Python).</p>
+        </div>
+    </footer>
+
+    <!-- Script de lógica de la aplicación -->
+    <script src="js/app.js"></script>
+</body>
+</html>
